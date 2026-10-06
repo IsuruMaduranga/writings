@@ -1,0 +1,7 @@
+# Tested with Python 3.13 on a MacBook with an Apple M4 Pro chip.
+laya==0.3.27          # brings torch and transformers, used by the Laya and Qwen experiments
+matplotlib==3.11.2
+numpy==2.5.3
+regex==2026.9.29      # GPT-2 tokenizer
+torch==2.14.1
+transformers==5.18.0

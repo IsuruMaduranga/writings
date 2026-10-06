@@ -1,0 +1,12 @@
+# Private working notes for each post: never published
+CLAUDE.md
+working-docs/
+
+# Local environments and caches
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Model weights, downloaded by each post's scripts
+gpt2_weights/
