@@ -8,6 +8,22 @@ internals.
 
 Read the post: [`article.md`](article.md).
 
+## Try it on your own text
+
+[`experiments/examples/`](experiments/examples/) holds three short scripts
+that route one support ticket. Each is self-contained, so you can copy it
+into any folder and run it. Edit `ticket` to route another ticket, or
+the prompt and the team names to try your own task.
+
+| Script | Method | Install |
+|---|---|---|
+| `gpt2_probabilities.py` | Read three answer probabilities from GPT-2 small | `pip install torch transformers` |
+| `qwen_probabilities.py` | The same with Qwen2.5-0.5B-Instruct, summing each answer's spellings | `pip install torch transformers` |
+| `laya_route.py` | Ask Laya, which takes the question as input | `pip install laya==0.3.27` |
+
+Each script prints the chosen team and its probabilities, for example
+`billing {'billing': 0.9872, 'technical': 0.0068, 'account': 0.006}`.
+
 ## Rerun the experiments
 
 The experiments ran on a MacBook with an Apple M4 Pro chip (14 CPU cores,
@@ -71,7 +87,8 @@ cd diagrams
 - `article.md`: the post. Mechanisms are Mermaid diagrams; measured results
   are the PNG files in `diagrams/`.
 - `experiments/tickets.py`: the 30 hand-labelled support tickets, 10 per
-  team.
+  team, the four tickets that fit no team, and the GPT-2 prompt and Laya
+  question the scripts share.
 - `experiments/gpt2_numpy.py` and `experiments/gpt2_tokenizer.py`: the
   GPT-2 forward pass and tokenizer in plain NumPy, running OpenAI's released
   weights.

@@ -1,3 +1,5 @@
+"""The task every experiment shares: 30 labelled tickets, the three teams, and how each method is asked."""
+
 # 30 hand-labelled support tickets, 10 per team. A few are deliberately mixed.
 TICKETS = [
  ("I was billed twice this month, please refund one of the charges.", "billing"),
@@ -32,3 +34,17 @@ TICKETS = [
  ("Transfer ownership of the workspace to my colleague.", "account"),
 ]
 LABELS = ["billing", "technical", "account"]
+
+# Tickets that belong to no team, for testing what a model does when no answer fits.
+NO_TEAM = ["What are your office hours?", "Do you have a job opening for a designer?",
+           "asdf qwer zxcv", "I love your product, thank you!"]
+
+# The prompt GPT-2 continues; the answer is its next token.
+GPT2_PROMPT = ("A support ticket is routed to one team: billing, technical, or account.\n"
+               "Ticket: {t}\nTeam:")
+
+# The same question in Laya's (and Jev's) request format.
+Q = {"team": {"type": "choice", "instructions": "Which team should handle this support ticket?",
+              "criteria": {"billing": "payments, invoices, refunds, plans, prices",
+                           "technical": "bugs, crashes, errors, things not working",
+                           "account": "login, password, profile, users, account settings"}}}

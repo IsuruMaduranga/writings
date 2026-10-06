@@ -1,5 +1,5 @@
 """Every number in 'How the LLMs you know work': tokens, one earlier word changing the next token, greedy decoding."""
-import sys, time, os
+import os, time
 import numpy as np
 from gpt2_numpy import load_safetensors, gpt2, softmax
 from gpt2_tokenizer import GPT2Tokenizer, GPT2_DIR

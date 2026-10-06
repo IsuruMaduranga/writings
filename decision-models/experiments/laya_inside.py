@@ -1,11 +1,10 @@
-import torch, numpy as np, time
+"""Inside Laya: its token sequence, parameter counts, raw scores, option order, label wording, and batching."""
+import time
+import numpy as np
+import torch
 from laya import Router
-from laya.common import build_sequence
-from tickets import TICKETS
-Q = {"team": {"type": "choice", "instructions": "Which team should handle this support ticket?",
-              "criteria": {"billing": "payments, invoices, refunds, plans, prices",
-                           "technical": "bugs, crashes, errors, things not working",
-                           "account": "login, password, profile, users, account settings"}}}
+from tickets import TICKETS, Q
+
 router = Router()
 router.predict({"body": "warm up"}, Q)
 agent = router._agents["english"]

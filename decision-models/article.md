@@ -817,4 +817,7 @@ weights; `instruct_logits.py` runs the Qwen2.5-Instruct models with Hugging
 Face transformers;
 `laya_run.py`, `laya_more.py`, `laya_inside.py`, `laya_confidence.py` and
 `laya_other.py` run on `pip install laya` (version 0.3.27). The figures
-are drawn by `diagrams/gen_diagrams.py`.*
+are drawn by `diagrams/gen_diagrams.py`. To try the methods on your own
+text, [`experiments/examples/`](experiments/examples/) has three short
+scripts you can copy and run on their own: reading answer probabilities
+from GPT-2 and from Qwen2.5, and asking Laya.*

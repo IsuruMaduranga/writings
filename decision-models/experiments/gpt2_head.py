@@ -1,15 +1,13 @@
 """Two patches on frozen GPT-2: (1) divide out its bias, (2) train a tiny head on its last hidden state."""
-import sys, time, os
+import os, time
 import numpy as np
 from gpt2_numpy import load_safetensors, layers, attention, mlp, layer_norm, softmax, gpt2
 from gpt2_tokenizer import GPT2Tokenizer, GPT2_DIR
-from tickets import TICKETS, LABELS
+from tickets import TICKETS, LABELS, GPT2_PROMPT as PROMPT
 
 W = load_safetensors(os.path.join(GPT2_DIR, "model.safetensors"))
 tok = GPT2Tokenizer()
 label_ids = [tok.encode(" " + l)[0] for l in LABELS]
-PROMPT = ("A support ticket is routed to one team: billing, technical, or account.\n"
-          "Ticket: {t}\nTeam:")
 y = np.array([LABELS.index(g) for _, g in TICKETS])
 
 # Patch 1: contextual calibration. Ask with an empty ticket, divide that bias out.

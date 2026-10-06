@@ -1,22 +1,19 @@
 """GPT-2 small as a classifier: one forward pass, read three token probabilities."""
-import sys, time, os
+import os, time
+from collections import Counter
 import numpy as np
 from gpt2_numpy import load_safetensors, gpt2, softmax, generate
 from gpt2_tokenizer import GPT2Tokenizer, GPT2_DIR
-from tickets import TICKETS, LABELS
+from tickets import TICKETS, LABELS, GPT2_PROMPT as PROMPT
 
 W = load_safetensors(os.path.join(GPT2_DIR, "model.safetensors"))
 tok = GPT2Tokenizer()
 label_ids = [tok.encode(" " + l)[0] for l in LABELS]
 print("label first tokens:", [tok.decode([i]) for i in label_ids], [len(tok.encode(" " + l)) for l in LABELS])
 
-PROMPT = ("A support ticket is routed to one team: billing, technical, or account.\n"
-          "Ticket: {t}\nTeam:")
-
 def classify(text):
-    logits = gpt2(np.array(tok.encode(PROMPT.format(t=text))), W)[-1]
-    p_all = softmax(logits)
-    p = p_all[label_ids]
+    scores = gpt2(np.array(tok.encode(PROMPT.format(t=text))), W)[-1]   # run the model once
+    p = softmax(scores)[label_ids]                                      # 3 of 50,257 probabilities
     return LABELS[int(p.argmax())], p / p.sum(), p.sum()
 
 def table(text, k=5):
@@ -35,7 +32,6 @@ for text, gold in TICKETS:
     rows.append((gold, pred, p.max(), mass))
 print(f"zero-shot accuracy: {correct}/{len(TICKETS)}")
 print(f"median time per decision: {np.median(times)*1000:.0f} ms (one forward pass, NumPy CPU)")
-from collections import Counter
 print("predicted:", Counter(r[1] for r in rows))
 print("mean prob mass on the three label tokens:", f"{np.mean([r[3] for r in rows]):.3f}")
 for (text, gold), (g, pr, c, m) in list(zip(TICKETS, rows))[:6]:
